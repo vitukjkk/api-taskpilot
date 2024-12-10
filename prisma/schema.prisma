@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  username  String   @unique
+  password  String
+  role      String   @default("user")
+  image     String?
+  tasks     Tasks[]  @relation("UserTasks")
+  teams     Equipes[] @relation("UserTeams")
+  @@map("user")
+}
+
+model Tasks {
+  id          String     @id @default(uuid())
+  name        String
+  description String      @default("Tarefa sem descrição.")
+  assignedTo  User?       @relation("UserTasks", fields: [assignedToId], references: [id])
+  assignedToId String?
+  team        Equipes?    @relation("TeamTasks", fields: [teamId], references: [id])
+  teamId      String?
+  prazo       DateTime
+  createdAt   DateTime    @default(now())
+  color       String?     @default("gray")
+  situation   String      @default("Pendente")
+  categories  Categories[] @relation("TaskCategories")
+  @@map("tasks")
+}
+
+model Categories {
+  id          String     @id @default(uuid())
+  name        String
+  description String?    @default("Categoria sem descrição")
+  color       String?    @default("gray")
+  tasks       Tasks[]    @relation("TaskCategories")
+  sprints     Sprints[]  @relation("CategorySprints")
+  createdAt   DateTime   @default(now())
+  @@map("categories")
+}
+
+model Sprints {
+  id          String     @id @default(uuid())
+  name        String
+  description String      @default("Sprint sem descrição.")
+  color       String?     @default("gray")
+  createdAt   DateTime    @default(now())
+  categories  Categories[] @relation("CategorySprints")
+  models      Modelos[]  @relation("SprintModels")
+  @@map("sprints")
+}
+
+model Modelos {
+  id          String     @id @default(uuid())
+  name        String
+  description String      @default("Modelo sem descrição.")
+  image       String?
+  sprints     Sprints?   @relation("SprintModels", fields: [sprintId], references: [id])
+  sprintId    String?
+  @@map("models")
+}
+
+model Equipes {
+  id      String   @id @default(uuid())
+  name    String
+  image   String?
+  members User[]   @relation("UserTeams")
+  tasks   Tasks[]  @relation("TeamTasks")
+  @@map("equipes")
+}
