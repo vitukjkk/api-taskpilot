@@ -1,11 +1,11 @@
 {
   "name": "api-taskpilot",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "dev": "tsc && node dist/server.js",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "build": "tsc --watch",
+    "start": "nodemon dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,11 @@
   "description": "API do TaskPilot!",
   "dependencies": {
     "@prisma/client": "^6.0.1",
-    "@types/express": "^5.0.0",
     "express": "^4.21.2",
     "prisma": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9"
   }
 }

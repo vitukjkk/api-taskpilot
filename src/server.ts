@@ -1,12 +1,13 @@
-import express from 'express';
+// IMPORTANDO MÓDULOS
+import express, { Request, Response } from 'express';
+import { routes } from './routes';
 
+// DEFININDO VARIÁVEIS
 const app = express();
-app.use(express.json())
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(express.json());
+app.use(routes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
