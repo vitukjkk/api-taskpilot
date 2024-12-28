@@ -12,9 +12,12 @@
   "license": "ISC",
   "description": "API do TaskPilot!",
   "dependencies": {
-    "@prisma/client": "^6.0.1",
+    "@prisma/client": "^6.1.0",
+    "bcrypt": "^5.1.1",
     "express": "^4.21.2",
-    "prisma": "^6.0.1"
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.1.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
